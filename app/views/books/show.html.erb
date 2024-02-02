@@ -1,10 +1,26 @@
-<p style="color: green"><%= notice %></p>
 
-<%= render @book %>
+<br>
+<div class="jumbotron p-3 mb-2 bg-dark text-white">
+  
+  <p> <h6>Book Name: <%=  @book.title%> </h6></p>
+  <p> Description: <%=  @book.description%> </p>
+  
 
-<div>
-  <%= link_to "Edit this book", edit_book_path(@book) %> |
-  <%= link_to "Back to books", books_path %>
+  <hr class="my-4">
 
-  <%= button_to "Destroy this book", @book, method: :delete %>
+
+  <br><br>
+  <h2>Comments</h2>
+  <% if @comments.any? %>
+    <% @comments.each do |comment| %>
+      <%= comment.content %>
+      
+  <% end %>
+  <% else %>
+    <h6> No comments </h6>
+  <% end %>
+
 </div>
+
+
+

@@ -1,14 +1,35 @@
-<p style="color: green"><%= notice %></p>
 
-<h1>Books</h1>
-
-<div id="books">
-  <% @books.each do |book| %>
-    <%= render book %>
-    <p>
-      <%= link_to "Show this book", book %>
-    </p>
-  <% end %>
+<div class="alert alert-warning alert-dismissible fade show mt-4" role="alert">
+  <%= notice%> 
+  <button type="button" class="btn-close mb-3" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
 
-<%= link_to "New book", new_book_path %>
+
+<div class='bg-dark text-white'>
+
+  <% if @books.any? %>
+    <h1>Books Collection</h1>
+
+    <div id="friends">
+    <% @books.each do |book| %>
+      <h5>Book Name: <%= book.title %></h5>
+      <%= render book %>
+      <p>
+        <%= link_to "Show this book", book, class:'btn btn-light text-black' %>
+      </p>
+
+      
+  <% end %> 
+  <% else %>
+      <h2>You have no books</h2>
+      
+  <% end %>
+  <br>
+
+  <%= link_to "Add New book", new_book_path, class:"btn btn-light text-black mt-4 mb-3" %>
+
+
+</div>
+
+
+
