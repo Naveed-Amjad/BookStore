@@ -1,6 +1,14 @@
 
 <br>
-<div class="jumbotron p-3 mb-2 bg-dark text-white">
+<div class="jumbotron p-3 mb-2 bg-dark text-white mt-3">
+  
+
+<% flash.each do |key, value| %>
+  <div class="alert alert-<%= key %>">
+    <%= value %>
+  </div>
+<% end %>
+ <br>
   
   <p> <h6>Book Name: <%=  @book.title%> </h6></p>
   <p> Description: <%=  @book.description%> </p>
@@ -8,13 +16,49 @@
 
   <hr class="my-4">
 
+  <%= link_to 'Back to books', books_path, class:'btn btn-light text-black' %> 
+
+  <% if current_user && (current_user == @book.user || current_user.admin?) %>
+    <%= link_to 'Edit Book', edit_book_path , class:"btn btn-light text-black ms-3" %>
+  <% end %>
+
+  <%= link_to 'Add Comment', new_book_comment_path(@book.id) , class:"btn btn-light text-black ms-3" %>
+  <br>
+
+  <% if current_user && (current_user == @book.user || current_user.admin?) %>
+    <%= button_to 'Delete Book', book_path , method: :delete, class:"btn btn-light text-black mt-3" %>
+  <% end %>
+
+
+
+  <br>
+  
+
 
   <br><br>
   <h2>Comments</h2>
   <% if @comments.any? %>
+
+   
     <% @comments.each do |comment| %>
-      <%= comment.content %>
       
+    <div class="d-flex bd-highlight">
+      <div class="p-2 flex-grow-1 bd-highlight bg-light text-dark border border "><%= comment.content %></div>
+      <div class="p-2 bd-highlight border bg-info border-dark rounded">
+      
+        <% if current_user && (current_user.admin? || current_user.id == comment.user_id) %>
+          <%= link_to 'Edit', edit_book_comment_path(book_id: @book.id, id: comment.id), class: "btn" %>
+        <% end %>
+      </div>
+
+      <% if current_user && (current_user.admin? || current_user.id == comment.user_id) %>
+      <%= button_to 'Delete', book_comment_path(book_id: @book.id, id: comment.id), method: :delete , class: "btn text-white bg-danger mt-2" %>
+        <% end %>
+
+      </div>
+      <br>  
+      <br>
+   
   <% end %>
   <% else %>
     <h6> No comments </h6>

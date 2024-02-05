@@ -3,4 +3,10 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
+
+         has_many :comments, dependent: :delete_all
+         has_many :books, dependent: :delete_all
+
+         attribute :role, :integer
+         enum role: { regular_user: 0, admin: 1 }
 end

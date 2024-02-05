@@ -19,11 +19,16 @@ class BooksController < ApplicationController
 
   # GET /books/1/edit
   def edit
+    @book = Book.find(params[:id])
+    @user = @book.user
+    #puts " this book belong to the user with user user_id #{@book.user} user"
+    #binding.break
   end
 
   # POST /books or /books.json
   def create
-    @book = Book.new(book_params)
+    @book = current_user.books.new(book_params)
+   # @book = Book.new(book_params)
 
     respond_to do |format|
       if @book.save
@@ -38,6 +43,8 @@ class BooksController < ApplicationController
 
   # PATCH/PUT /books/1 or /books/1.json
   def update
+    authorize @book
+
     respond_to do |format|
       if @book.update(book_params)
         format.html { redirect_to book_url(@book), notice: "Book was successfully updated." }
@@ -51,6 +58,10 @@ class BooksController < ApplicationController
 
   # DELETE /books/1 or /books/1.json
   def destroy
+
+    @book = Book.find(params[:id])
+    authorize @book
+
     @book.destroy!
 
     respond_to do |format|
@@ -62,12 +73,16 @@ class BooksController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_book
-      @book = Book.find(params[:id])
+      begin
+        @book = Book.find(params[:id])
+      rescue ActiveRecord::RecordNotFound => e
+        redirect_to '/404'
+      end  
     end
 
     # Only allow a list of trusted parameters through.
     def book_params
-      params.require(:book).permit(:title, :description)
+      params.require(:book).permit(:title, :description, :user_id)
       # binding.break
     end
 end

@@ -16,13 +16,13 @@
 
     <div class="field form-group">
       <%= form.label :user_id, style: "display: block" %>
-      <%= form.number_field :user_id, value: current_user.id, readonly: true, class:"form-control" %>
+      <%= form.number_field :user_id, value: current_user&.id, readonly: true, class:"form-control" %>
 
     </div>
 
     <div class="field form-group">
       <%= form.label :book_id, style: "display: block" %>
-      <%= form.number_field :book_id, class:"form-control" %>
+      <%= form.number_field :book_id, value: @book.id, readonly: true, class:"form-control" %>
       
     </div>
 

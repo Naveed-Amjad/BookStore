@@ -1,11 +1,15 @@
 
-<div class="alert alert-warning alert-dismissible fade show mt-4" role="alert">
-  <%= notice%> 
-  <button type="button" class="btn-close mb-3" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>
+<% if notice.present? %>
+
+  <div class="alert alert-warning alert-dismissible fade show mt-4" role="alert">
+    <%= notice %> 
+    <button type="button" class="btn-close mb-3" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+
+<% end %>
 
 
-<div class='bg-dark text-white'>
+<div class='bg-dark text-white mt-5'>
 
   <% if @books.any? %>
     <h1>Books Collection</h1>
