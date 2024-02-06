@@ -1,7 +1,7 @@
 class CommentsController < ApplicationController
   before_action :set_comment, only: %i[ show edit update destroy ]
-  # before_action :authenticate_user!, only: [:edit, :update]
-  
+  before_action :authorize_user, only: [:edit, :update, :destroy]
+  before_action :user_exist, only: [:new]
 
   # GET /comments or /comments.json
   def index
@@ -96,9 +96,23 @@ class CommentsController < ApplicationController
       params.require(:comment).permit(:user_id, :book_id, :content)
     end
 
-    def authenticate_user!
-      unless user_signed_in? && (current_user.admin? || current_user.id == @comment.user_id)
-        redirect_to login_path, alert: "You are not authorized to perform this action."
+    def authorize_user
+      begin
+        authorize @comment, :update?
+      rescue Pundit::NotAuthorizedError
+        render_404
       end
+    end
+
+    def user_exist
+      begin
+        authorize Comment.new, :create?
+      rescue Pundit::NotAuthorizedError
+        redirect_to new_user_session_path
+      end
+    end
+
+    def render_404
+      render file: "#{Rails.root}/public/404.html", status: :not_found, layout: false
     end
 end

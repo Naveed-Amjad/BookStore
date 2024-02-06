@@ -9,28 +9,42 @@
 <% end %>
 
 
-<div class='bg-dark text-white mt-5'>
+<div class='bg-dark text-white' style="height: 100%;">
 
   <% if @books.any? %>
-    <h1>Books Collection</h1>
+  <h1 class="text-center ">Books Collection</h1>
 
-    <div id="friends">
+    <div class="container">
+  <div class="row">
     <% @books.each do |book| %>
-      <h5>Book Name: <%= book.title %></h5>
-      <%= render book %>
-      <p>
-        <%= link_to "Show this book", book, class:'btn btn-light text-black' %>
-      </p>
+      <div class="col-md-4 mb-4 mt-3">
+        <div class="card" style="width: 400px; height: 500px;">
+          <%= image_tag book.image, style: "width: 100%; height: 70%; object-fit: cover;" if book.image.attached? %>
+          <div class="card-body" style="width: 100%; height: 30%; padding: 15px;">
+            <h5 class="card-title"><%= book.title %></h5>
+            <p class="card-text"><%= book.description %></p>
+            <%= link_to 'Show Book', book_path(book.id), class:"btn btn-primary" %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
 
-      
-  <% end %> 
+</div>
+
+</div>
+
+  </div>
+</div>
+  
+     
   <% else %>
       <h2>You have no books</h2>
       
   <% end %>
   <br>
 
-  <%= link_to "Add New book", new_book_path, class:"btn btn-light text-black mt-4 mb-3" %>
 
 
 </div>

@@ -1,5 +1,6 @@
 class BooksController < ApplicationController
   before_action :set_book, only: %i[ show edit update destroy ]
+  before_action :user_exist, only: [:new]
 
   # GET /books or /books.json
   def index
@@ -82,7 +83,15 @@ class BooksController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def book_params
-      params.require(:book).permit(:title, :description, :user_id)
+      params.require(:book).permit(:title, :description, :user_id, :image)
       # binding.break
+    end
+
+    def user_exist
+      begin
+        authorize Book.new, :create?
+      rescue Pundit::NotAuthorizedError
+        redirect_to new_user_session_path
+      end
     end
 end

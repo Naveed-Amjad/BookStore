@@ -12,6 +12,10 @@
   
   <p> <h6>Book Name: <%=  @book.title%> </h6></p>
   <p> Description: <%=  @book.description%> </p>
+
+  <%= image_tag @book.image, style: "height: 300px; width: 300px;", class: "mx-auto d-block" if @book.image.attached?  %>
+
+  
   
 
   <hr class="my-4">
