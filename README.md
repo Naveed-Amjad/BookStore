@@ -21,4 +21,4 @@ Things you may want to cover:
 
 * Deployment instructions
 
-* This is Raedme file of BookStore application
+* This is the Readme file of BookStore application
