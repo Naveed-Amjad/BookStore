@@ -1,7 +1,7 @@
 class BookPolicy < ApplicationPolicy
 
   def create?
-    user.present?  # Allow creation if the user is logged in (its implemetaion is pending)
+    true
   end
 
   def destroy?
@@ -19,7 +19,7 @@ class BookPolicy < ApplicationPolicy
   private
 
   def admin_user?
-    user&.admin?
+    user&.admin? || record.user == user 
   end
 
   def user_created_book?

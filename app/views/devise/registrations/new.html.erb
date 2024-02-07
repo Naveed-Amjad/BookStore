@@ -10,10 +10,25 @@
                   <h2 class="fw-bold mb-2 text-uppercase">Sign Up</h2>
                   <p class="text-white-50 mb-5">Please enter your details to create an account!</p>
 
+
+                  <% if resource.errors[:email].any? %>
+                    <div class="error-message" style="color: red; font-weight: bold;">
+                      <%= resource.errors.full_messages_for(:email).join(", ") %>
+                    </div>
+                  <% end %>
+
                   <div class="form-outline form-white mb-4">
                     <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "Email", class:"form-control form-control-lg" %>
                     <%= f.label :email, class:"form-label" %><br />
                   </div>
+
+
+                  <% if resource.errors[:password].any? %>
+                    <div class="error-message" style="color: red; font-weight: bold;">
+                      <%= resource.errors.full_messages_for(:password).join(", ") %>
+                    </div>
+                  <% end %>
+
 
                   <div class="field form-group">
                     <br>
@@ -23,6 +38,16 @@
                     <%= f.password_field :password, autocomplete: "new-password", placeholder: "Password", class:"form-control form-control-lg" %>
                   </div>
 
+
+
+                  <br>
+                  <% if resource.errors[:password_confirmation].any? %>
+                    <div class="error-message" style="color: red; font-weight: bold;">
+                      <%= resource.errors.full_messages_for(:password_confirmation).join(", ") %>
+                    </div>
+                  <% end %>
+
+                  
                   <div class="field form-group">
                     <br>
                     <%= f.password_field :password_confirmation, autocomplete: "new-password", placeholder: "Confirm Password", class:"form-control form-control-lg" %>

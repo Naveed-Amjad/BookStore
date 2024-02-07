@@ -1,2 +1,19 @@
-<h1 class="">Welcom to BookStore</h1>
-<p></p>
+<!-- app/views/welcome/index.html.erb -->
+
+<div class="container-fluid vh-100 d-flex align-items-center" style="background-image: url('<%= asset_path('library.jpg') %>'); background-size: cover; background-position: center; height: 100vh; overflow-x: hidden;">
+  <div class="row">
+    <div class="col-md-8 offset-md-2 text-center">
+      <div class="card text-white p-4 mx-auto" style="background-color: rgba(0, 0, 0, 0.7); border: none; height: 70vh; width: 60vw; max-width: 400px;">
+        <h1 class="display-4 mb-4">Welcome to Our Book Store</h1>
+        <p class="lead">
+          Explore a world of literature at our Book Store. Discover a diverse collection of books added by fellow readers. 
+          Share your favorite reads and connect with a community passionate about books.
+        </p>
+        <p class="lead">
+          Ready to get started? <br>
+          <%= link_to "Browse Books", books_path, class: "btn btn-primary btn-lg mt-3" %>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

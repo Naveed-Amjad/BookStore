@@ -1,7 +1,7 @@
 class CommentsController < ApplicationController
+  before_action :authenticate_user!, except: [:index, :show ]
+  before_action :set_book, only: [ :show, :edit, :update, :new]
   before_action :set_comment, only: %i[ show edit update destroy ]
-  before_action :authorize_user, only: [:edit, :update, :destroy]
-  before_action :user_exist, only: [:new]
 
   # GET /comments or /comments.json
   def index
@@ -9,34 +9,15 @@ class CommentsController < ApplicationController
   end
 
   # GET /comments/1 or /comments/1.json
-  def show
-  end
+  def show; end
 
   # GET /comments/new
   def new
-    @book = Book.find(params[:book_id])
     @comment = Comment.new
   end
 
   # GET /comments/1/edit
-  def edit
-    # @comment = Comment.find_by(book_id: params[:id])
-     @book = @comment.book
-    # puts "#{@comment.id} is id of comment"
-    # puts "#{@comment.book.id} ids are equal #{@comment.book.id} = #{params[:book_id]}  of book"
-    # binding.break
-    # begin
-    #   if @comment.book.id == params[:book_id]
-    #     @book = @comment.book
-    #   end  
-    # rescue ActiveRecord::RecordNotFound => e
-    #     redirect_to '/404'
-    # end 
-          
-    # puts " comment id = #{@comment.id} in edit method"
-    # puts "book id = #{@book.id} in edit method"
-    # binding.break
-  end
+  def edit; end
 
   # POST /comments or /comments.json
   def create
@@ -78,41 +59,17 @@ class CommentsController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
+
+    def set_book
+      @book = Book.find(params[:book_id])
+    end
+
     def set_comment
-      begin
-        @comment = Comment.find(params[:id])
-        if @comment.book.id == params[:book_id].to_i
-          @book = @comment.book
-        else
-          redirect_to '/404'
-        end
-      rescue ActiveRecord::RecordNotFound => e
-        redirect_to '/404'
-      end  
+      @comment = @book.comments.find_by(id: params[:id])
     end
 
     # Only allow a list of trusted parameters through.
     def comment_params
       params.require(:comment).permit(:user_id, :book_id, :content)
-    end
-
-    def authorize_user
-      begin
-        authorize @comment, :update?
-      rescue Pundit::NotAuthorizedError
-        render_404
-      end
-    end
-
-    def user_exist
-      begin
-        authorize Comment.new, :create?
-      rescue Pundit::NotAuthorizedError
-        redirect_to new_user_session_path
-      end
-    end
-
-    def render_404
-      render file: "#{Rails.root}/public/404.html", status: :not_found, layout: false
     end
 end

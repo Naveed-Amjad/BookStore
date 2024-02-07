@@ -1,7 +1,7 @@
 class CommentPolicy < ApplicationPolicy
 
   def create?
-    user.present?  # Allow creation if the user is logged in (its implemetaion is pending)
+    true  # Allow creation if the user is logged in (its implemetaion is pending)
   end
 
   def update?
@@ -15,7 +15,7 @@ class CommentPolicy < ApplicationPolicy
   private
 
   def admin_user?
-    user&.admin?
+    user&.admin? 
   end
 
   def user_created_comment?
