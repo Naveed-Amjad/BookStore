@@ -2,6 +2,11 @@ source "https://rubygems.org"
 
 ruby "3.1.1"
 
+
+gem "devise", "~> 4.9"
+
+gem "pundit", "~> 2.3"
+
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.1.2"
 
@@ -72,6 +77,3 @@ group :development, :test do
   gem 'rspec-rails', '~> 6.1.0'
 end
 
-gem "devise", "~> 4.9"
-
-gem "pundit", "~> 2.3"
